@@ -25,48 +25,36 @@
             padding: 0 20px;
         }
 
-        /* Шапка с навигацией */
+        /* Шапка */
         .header {
             background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
             z-index: 1000;
+            padding: 15px 0;
         }
 
         .header-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
             flex-wrap: wrap;
             gap: 20px;
         }
 
         .logo {
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
         }
 
-        .nav-menu {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: #1e293b;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        .nav-menu a:hover {
-            color: #4f46e5;
+        .logo span {
+            background: none;
+            -webkit-text-fill-color: #1e293b;
         }
 
         .cart-icon {
@@ -85,17 +73,6 @@
             font-size: 0.7rem;
             padding: 2px 7px;
             border-radius: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .header-inner {
-                flex-direction: column;
-            }
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
         }
 
         /* Корзина */
@@ -310,7 +287,7 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 4rem;
+            font-size: 3rem;
         }
 
         .product-info {
@@ -427,6 +404,7 @@
 
         .footer h3 {
             margin-bottom: 20px;
+            font-size: 1.2rem;
         }
 
         .footer a {
@@ -434,6 +412,7 @@
             text-decoration: none;
             display: block;
             margin-bottom: 10px;
+            transition: 0.3s;
         }
 
         .footer a:hover {
@@ -462,14 +441,7 @@
 <header class="header">
     <div class="container">
         <div class="header-inner">
-            <a href="#" class="logo">Magic<span style="background:none; -webkit-text-fill-color:#1e293b;">Toys</span></a>
-            <ul class="nav-menu">
-                <li><a href="#home">Главная</a></li>
-                <li><a href="#products">Игрушки</a></li>
-                <li><a href="#products">Сувениры</a></li>
-                <li><a href="#products">Игры</a></li>
-                <li><a href="#contact">Контакты</a></li>
-            </ul>
+            <a href="#" class="logo">Magic<span>Toys</span></a>
             <div class="cart-icon" id="cartIcon">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count" id="cartCount">0</span>
@@ -478,14 +450,14 @@
     </div>
 </header>
 
-<section class="hero" id="home">
+<section class="hero">
     <div class="container">
         <h1>✨ <i>Магия в каждой игрушке</i> ✨</h1>
         <p>Сувениры и игрушки ручной работы для детей и взрослых</p>
     </div>
 </section>
 
-<div class="container" id="products">
+<div class="container">
     <div class="filters">
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Поиск игрушек...">
@@ -516,7 +488,7 @@
     <div class="products-grid" id="productsGrid"></div>
 </div>
 
-<footer class="footer" id="contact">
+<footer class="footer">
     <div class="container">
         <div class="footer-grid">
             <div><h3>MagicToys</h3><p>Магазин игрушек и сувениров ручной работы</p></div>
@@ -538,7 +510,7 @@
     <button class="checkout-btn" id="checkoutBtn">Оформить заказ</button>
 </div>
 
-<!-- Модальное окно -->
+<!-- Модальное окно оформления -->
 <div class="checkout-modal" id="checkoutModal">
     <div class="checkout-modal-content">
         <h3>Оформление заказа</h3>
@@ -553,7 +525,7 @@
 </div>
 
 <script>
-    // ТОВАРЫ (16 штук)
+    // ТОВАРЫ (16 штук, 5 категорий)
     const products = [
         { id: 1, name: "Медвежонок Бамбл", category: "Мягкие игрушки", price: 1500, icon: "fas fa-bear", description: "Мягкий медвежонок ручной работы" },
         { id: 2, name: "Заяц-вышивайка", category: "Мягкие игрушки", price: 1200, icon: "fas fa-rabbit", description: "Заяц с вышивкой" },
@@ -609,7 +581,7 @@
     function renderProducts(){
         let grid = document.getElementById("productsGrid");
         grid.innerHTML = filteredProducts.map(p => `
-            <div class="product-card"><div class="product-img"><i class="${p.icon}" style="font-size: 4rem;"></i></div><div class="product-info"><div class="product-category">${p.category}</div><div class="product-title">${p.name}</div><div class="product-price">${p.price.toLocaleString()} ₽</div><button class="add-to-cart" onclick="addToCart(${p.id})">В корзину</button></div></div>
+            <div class="product-card"><div class="product-img"><i class="${p.icon}" style="font-size: 3rem;"></i></div><div class="product-info"><div class="product-category">${p.category}</div><div class="product-title">${p.name}</div><div class="product-price">${p.price.toLocaleString()} ₽</div><button class="add-to-cart" onclick="addToCart(${p.id})">В корзину</button></div></div>
         `).join('');
     }
 
@@ -667,5 +639,6 @@
 
     filterAndSort(); updateCartCount(); renderCart();
 </script>
+
 </body>
 </html>
